@@ -1,0 +1,44 @@
+/* Create a dataset with multiple options data, including stock ticker names */
+data options_data;
+    input Ticker $ S K r sigma T;
+    datalines;
+AAPL 100 100 0.05 0.2 1
+GOOG 100 110 0.05 0.2 1
+MSFT 100 90  0.05 0.2 0.5
+AMZN 120 130 0.03 0.25 2
+;
+run;
+
+/* Calculate option prices and relevant variables */
+data options_pricing;
+    set options_data;
+    
+    /* Calculate d1 and d2 for each option */
+    d1 = (log(S / K) + (r + 0.5 * sigma**2) * T) / (sigma * sqrt(T));
+    d2 = d1 - sigma * sqrt(T);
+    
+    /* Calculate the cumulative distribution functions for d1 and d2 */
+    cdf_d1 = PROBNORM(d1);
+    cdf_d2 = PROBNORM(d2);
+    
+    /* Calculate European call and put option prices */
+    call_price = S * cdf_d1 - K * exp(-r * T) * cdf_d2;
+    put_price = K * exp(-r * T) * (1 - cdf_d2) - S * (1 - cdf_d1);
+run;
+
+/* Display the results with added variables */
+proc print data=options_pricing noobs label;
+    var Ticker S K r sigma T d1 d2 call_price put_price;
+    label 
+        Ticker='Stock Ticker'
+        S='Underlying Price'
+        K='Strike Price'
+        r='Risk-Free Rate'
+        sigma='Implied Volatility'
+        T='Time to Maturity'
+        d1='d1'
+        d2='d2'
+        call_price='Call Option Price'
+        put_price='Put Option Price';
+    title "Black-Scholes-Merton Option Pricing for European Call and Put Options";
+run;

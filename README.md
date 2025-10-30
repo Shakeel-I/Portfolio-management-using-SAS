@@ -1,6 +1,10 @@
 # Value-at-Risk-using-SAS
 
+<img width="614" height="461" alt="DailyReturns" src="https://github.com/user-attachments/assets/7ad5c8c2-2e5a-46eb-82cf-c37083c8d472" />
 
+<img width="614" height="461" alt="Prices" src="https://github.com/user-attachments/assets/6f2f6aec-4a0d-4b32-9455-0ee2e3126ed8" />
+
+<img width="614" height="461" alt="Returns" src="https://github.com/user-attachments/assets/fac4d617-e305-44b3-8f61-81d7e1aac2f9" />
 
 
 # Black-Scholes-Merton-using-SAS
